@@ -10,7 +10,7 @@ namespace Sports_Results_Logger
     public static class EmailLogger
     {
         private static string filePath = @"D:\Users\steez\source\repos\Sports Results Logger\Sports Results Logger\EmailLog.txt";
-        public static bool CheckEmailLogExists()
+        public static string GetEmailLog()
         {
             if (!File.Exists(filePath))
             {
@@ -18,30 +18,12 @@ namespace Sports_Results_Logger
                 Console.WriteLine("EmailLog.txt has been created.");
             }
             
-            string text = File.ReadAllText(filePath);
-
-            if (string.IsNullOrEmpty(text))
-            {
-                string time = DateTime.Now.ToString();
-                File.WriteAllText("EmailLog.txt", time);
-                return true;
-            }
-            return false;
+            return File.ReadAllText(filePath);
         }
 
-        public static bool CheckEmailTimeToSend()
+        public static void SaveEmailLog(string time)
         {
-            string text = File.ReadAllText(filePath);
-
-            DateTime sendTime = DateTime.Parse(text).AddDays(1);
-
-            if(sendTime < DateTime.Now)
-            {
-                string time = DateTime.Now.ToString();
-                File.WriteAllText("EmailLog.txt", time);
-                return true;
-            }
-            return false;
+            File.WriteAllText("EmailLog.txt", time);
         }
     }
 }

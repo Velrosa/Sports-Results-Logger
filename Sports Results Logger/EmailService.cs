@@ -10,20 +10,35 @@ namespace Sports_Results_Logger
     {        
         public static void SendEmailProcess()
         {
-            if (EmailLogger.CheckEmailLogExists() || EmailLogger.CheckEmailTimeToSend())
+            string log = EmailLogger.GetEmailLog();
+
+            if (string.IsNullOrEmpty(log))
             {
-                GetContentSendEmail();
+                GetContentSendEmail(DateTime.Now);
+                EmailLogger.SaveEmailLog(DateTime.Now.ToString());
+                return;
+            }
+
+            DateTime sendTime = DateTime.Parse(log).AddDays(1);
+
+            if (sendTime < DateTime.Now)
+            {
+                GetContentSendEmail(sendTime);
+                EmailLogger.SaveEmailLog(sendTime.ToString());
+                return;
             }
         }
 
-        internal static void GetContentSendEmail()
+        internal static void GetContentSendEmail(DateTime sendTime)
         {
-            string content = HTMLScraper.GetContent();
+            string content = HTMLScraper.GetContent(sendTime);
             string time = DateTime.Now.ToString();
-            
-            //MailSender.SendEmail($"NBA : Conference Standings ({time})", content);
 
-            Console.WriteLine($"Email has been sent at {time}");
+            if(String.IsNullOrWhiteSpace(content)) return;
+
+            MailSender.SendEmail($"NBA : Conference Standings ({sendTime})", content);
+
+            Console.WriteLine($"Email has been sent.");
         }
     }
 }

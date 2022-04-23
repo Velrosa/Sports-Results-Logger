@@ -13,7 +13,7 @@ namespace Sports_Results_Logger
         public static void BeginTimer()
         {
             timer = new Timer();
-            
+
             timer.Interval = 900_000;
 
             timer.Elapsed += OnTimedEvent;
