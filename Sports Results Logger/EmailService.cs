@@ -21,7 +21,7 @@ namespace Sports_Results_Logger
             string content = HTMLScraper.GetContent();
             string time = DateTime.Now.ToString();
             
-            MailSender.SendEmail($"NBA : Conference Standings ({time})", content);
+            //MailSender.SendEmail($"NBA : Conference Standings ({time})", content);
 
             Console.WriteLine($"Email has been sent at {time}");
         }

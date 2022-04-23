@@ -14,7 +14,7 @@ namespace Sports_Results_Logger
         {
             timer = new Timer();
             
-            timer.Interval = 1_800_000;
+            timer.Interval = 900_000;
 
             timer.Elapsed += OnTimedEvent;
 
@@ -22,12 +22,13 @@ namespace Sports_Results_Logger
 
             timer.Enabled = true;
 
+            Console.WriteLine("Press Enter to exit the Application... ");
             Console.ReadLine();
         }
 
         private static void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
-            Console.WriteLine($"30 Minute email interval check at {e.SignalTime}");
+            Console.WriteLine($"15 Minute email interval check at {e.SignalTime}");
             EmailService.SendEmailProcess();
         }
     }
