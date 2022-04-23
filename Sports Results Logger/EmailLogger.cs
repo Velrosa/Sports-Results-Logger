@@ -11,12 +11,12 @@ namespace Sports_Results_Logger
     {
         public static bool CheckEmailLogExists()
         {
-            string text = File.ReadAllText(@"D:\Users\steez\source\repos\Sports Results Logger\Sports Results Logger\WriteLines.txt");
+            string text = File.ReadAllText(@"D:\Users\steez\source\repos\Sports Results Logger\Sports Results Logger\EmailLog.txt");
 
             if (string.IsNullOrEmpty(text))
             {
                 string time = DateTime.Now.ToString();
-                File.WriteAllTextAsync("WriteLines.txt", time);
+                File.WriteAllTextAsync("EmailLog.txt", time);
                 return true;
             }
             return false;
@@ -24,14 +24,14 @@ namespace Sports_Results_Logger
 
         public static bool CheckEmailTimeToSend()
         {
-            string text = File.ReadAllText(@"D:\Users\steez\source\repos\Sports Results Logger\Sports Results Logger\WriteLines.txt");
+            string text = File.ReadAllText(@"D:\Users\steez\source\repos\Sports Results Logger\Sports Results Logger\EmailLog.txt");
 
             DateTime sendTime = DateTime.Parse(text).AddDays(1);
 
             if(sendTime < DateTime.Now)
             {
                 string time = DateTime.Now.ToString();
-                File.WriteAllTextAsync("WriteLines.txt", time);
+                File.WriteAllTextAsync("EmailLog.txt", time);
                 return true;
             }
             return false;
